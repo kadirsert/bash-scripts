@@ -6,8 +6,9 @@ bold="\033[1m"
 def="\033[0m"
 
 for net_name in $(docker network ls |tail -n +2 |awk '{print $2}')
-do printf '%-6b%20b\n' "${red}${bold}Name:" "${net_name}${def}"
-  echo "---------------------"
+do
+  printf '%-4b: %32b\n' "${red}${bold}Name" "${net_name}${def}"
+  echo "----------------------------------"
   net_driver=$(docker network inspect --format='{{ .Driver }}' ${net_name})
   echo -e "${green}Driver:${def} ${net_driver}"
   if [ "${net_driver}" == "bridge" ]; then
